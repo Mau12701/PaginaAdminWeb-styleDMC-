@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="es">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin - HTML/CSS Reference</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- jQuery (necesario para Bootstrap y tu código) -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary-red: #ff0000;
+            --dark-red: #900000;
+            --darker-red: #400000;
+            --dark-bg: #111;
+            --text-color: #ddd;
+            --accent-color: #ff4444;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap');
+        
+        body {
+            font-family: 'Oswald', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-color);
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        
+        /* Preloader */
+        .preloader {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            position: fixed;
+            z-index: 99999;
+            background: var(--dark-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .lds-ripple {
+            display: inline-block;
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+        
+        .lds-ripple div {
+            position: absolute;
+            border: 4px solid var(--primary-red);
+            opacity: 1;
+            border-radius: 50%;
+            animation: lds-ripple 1s cubic-bezier(0, 0.2, 0.8, 1) infinite;
+        }
+        
+        .lds-ripple div:nth-child(2) {
+            animation-delay: -0.5s;
+        }
+        
+        @keyframes lds-ripple {
+            0% {
+                top: 36px;
+                left: 36px;
+                width: 0;
+                height: 0;
+                opacity: 1;
+            }
+            100% {
+                top: 0px;
+                left: 0px;
+                width: 72px;
+                height: 72px;
+                opacity: 0;
+            }
+        }
+        
+        /* Topbar */
+        .topbar {
+            background: linear-gradient(90deg, var(--darker-red), var(--dark-red)) !important;
+            box-shadow: 0 2px 10px rgba(255, 0, 0, 0.5);
+            border-bottom: 1px solid var(--primary-red) !important;
+            height: 60px;
+        }
+        
+        .navbar-brand {
+            font-family: 'Oswald', sans-serif;
+            font-weight: bold;
+            color: white !important;
+            text-shadow: 0 0 10px var(--primary-red);
+            font-size: 1.5rem;
+        }
+        
+        .topbar .nav-link {
+            color: white !important;
+            padding: 0.5rem 1rem;
+        }
+        
+        .topbar .nav-link:hover {
+            color: var(--primary-red) !important;
+        }
+        
+        .dropdown-menu {
+            background-color: #222;
+            border: 1px solid var(--dark-red);
+        }
+        
+        .dropdown-item {
+            color: var(--text-color);
+        }
+        
+        .dropdown-item:hover {
+            background-color: var(--darker-red);
+            color: white;
+        }
+        
+        /* Sidebar */
+        .left-sidebar {
+            width: 220px;
+            background: linear-gradient(180deg, var(--dark-red), var(--darker-red));
+            box-shadow: 4px 0 15px rgba(255, 0, 0, 0.8);
+            position: fixed;
+            z-index: 4;
+            height: 100%;
+            padding-top: 5px;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-nav {
+            padding: 15px;
+        }
+        
+        .sidebar-nav ul {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .sidebar-item {
+            margin: 5px 0;
+        }
+        
+        .sidebar-link {
+            text-decoration: none;
+            font-size: 1em;
+            font-weight: bold;
+            color: white;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 8px 15px;
+            border-radius: 4px;
+        }
+        
+        .sidebar-link:hover, .sidebar-link.active {
+            color: var(--primary-red);
+            text-shadow: 0 0 10px var(--primary-red);
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        .sidebar-link i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .nav-small-cap {
+            font-size: 12px;
+            padding: 15px 15px 5px 15px;
+            color: var(--primary-red);
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+        
+        /* User profile in sidebar */
+        .user-profile {
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .user-pic {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin: 0 auto 10px;
+            overflow: hidden;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .user-pic img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .user-content {
+            color: white;
+        }
+        
+        .user-name {
+            color: white;
+            margin-bottom: 5px;
+        }
+        
+        /* Main content */
+        .page-wrapper {
+            margin-left: 220px;
+            padding-top: 60px;
+            background: radial-gradient(circle, rgba(255,0,0,0.1) 0%, var(--dark-bg) 100%);
+            min-height: 100vh;
+            overflow-y: auto;
+            height: calc(100vh - 60px);
+            transition: all 0.3s;
+        }
+        
+        /* Content iframe */
+        .content-iframe {
+            width: 100%;
+            height: calc(100vh - 60px);
+            border: none;
+            background: transparent;
+        }
+        
+        /* Breadcrumb */
+        .breadcrumb {
+            background: transparent;
+            padding: 0.75rem 1rem;
+        }
+        
+        .breadcrumb-item a {
+            color: var(--primary-red);
+            text-decoration: none;
+        }
+        
+        .breadcrumb-item.active {
+            color: var(--text-color);
+        }
+        
+        /* Cards */
+        .card {
+            background: #222;
+            border: 1px solid var(--dark-red);
+            color: var(--text-color);
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        
+        .card-header {
+            background: linear-gradient(90deg, var(--darker-red), var(--dark-red));
+            color: white;
+            border-bottom: 1px solid var(--primary-red);
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 15px;
+            background: #222;
+            color: var(--text-color);
+            border-top: 1px solid var(--dark-red);
+            text-align: center;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .left-sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            
+            .page-wrapper {
+                margin-left: 0;
+            }
+            
+            .sidebar-nav {
+                display: flex;
+                flex-wrap: wrap;
+            }
+            
+            .sidebar-item {
+                margin: 5px;
+            }
+        }
+        
+        /* Toggle sidebar */
+        .sidebar-collapsed .left-sidebar {
+            width: 70px;
+            overflow: hidden;
+        }
+        
+        .sidebar-collapsed .left-sidebar .nav-small-cap,
+        .sidebar-collapsed .left-sidebar .hide-menu,
+        .sidebar-collapsed .left-sidebar .user-content {
+            display: none;
+        }
+        
+        .sidebar-collapsed .left-sidebar .sidebar-link {
+            text-align: center;
+            padding: 10px 5px;
+        }
+        
+        .sidebar-collapsed .left-sidebar .sidebar-link i {
+            margin-right: 0;
+            font-size: 1.2rem;
+        }
+        
+        .sidebar-collapsed .page-wrapper {
+            margin-left: 70px;
+        }
+        /* Sidebar */
+.left-sidebar {
+    width: 220px;
+    background: linear-gradient(180deg, var(--dark-red), var(--darker-red));
+    box-shadow: 4px 0 15px rgba(255, 0, 0, 0.8);
+    position: fixed;
+    z-index: 4;
+    height: 100vh; /* Altura completa del viewport */
+    padding-top: 5px;
+    overflow: hidden; /* Oculta el scroll del contenedor principal */
+    transition: all 0.3s;
+}
+
+.scroll-sidebar {
+    height: calc(100vh - 20px); /* Ajusta según necesites */
+    overflow-y: auto; /* Habilita el scroll vertical */
+    padding-bottom: 20px; /* Espacio al final */
+}
+
+/* Personaliza la barra de scroll */
+.scroll-sidebar::-webkit-scrollbar {
+    width: 6px; /* Ancho de la barra de scroll */
+}
+
+.scroll-sidebar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1); /* Color de fondo del track */
+    border-radius: 10px;
+}
+
+.scroll-sidebar::-webkit-scrollbar-thumb {
+    background: var(--primary-red); /* Color del thumb */
+    border-radius: 10px;
+}
+
+.scroll-sidebar::-webkit-scrollbar-thumb:hover {
+    background: #ff3333; /* Color al pasar el mouse */
+}
+.left-sidebar {
+    height: calc(100vh - 60px); /* Resta la altura del header */
+    top: 60px; /* Posición debajo del header */
+}
+
+.scroll-sidebar {
+    height: calc(100vh - 80px); /* Ajusta según el header y footer */
+}
+    </style>
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    
+    <!-- Main wrapper -->
+    <div id="main-wrapper">
+        <!-- Topbar header -->
+        <header class="topbar">
+            <nav class="navbar top-navbar navbar-expand-md navbar-dark">
+                <div class="navbar-header">
+                    <!-- Toggle sidebar button -->
+                    <a class="nav-toggler waves-effect waves-light d-block d-md-none" href="javascript:void(0)" id="mobile-toggle">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                    <!-- Toggle mini sidebar button -->
+                    <a class="sidebartoggler waves-effect waves-light d-none d-md-block" href="javascript:void(0)" id="sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </a>
+                    <!-- Logo -->
+                    <a class="navbar-brand" href="#">
+                        <span class="logo-text">ADMIN</span>
+                    </a>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <!-- Right side items -->
+                    <ul class="navbar-nav ms-auto">
+                        <!-- Notifications -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="far fa-bell"></i>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                    3
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end dropdown-notifications" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <div class="drop-title bg-primary text-white p-3">
+                                        <h5 class="m-b-0 m-t-0">4 New</h5>
+                                        <span class="font-light">Notifications</span>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="message-center notifications p-2">
+                                        <!-- Notification item -->
+                                        <a href="javascript:void(0)" class="message-item">
+                                            <span class="btn btn-danger btn-circle">
+                                                <i class="fa fa-link"></i>
+                                            </span>
+                                            <div class="mail-contnet">
+                                                <h5 class="message-title">Nuevo contenido</h5>
+                                                <span class="mail-desc">Se ha añadido nueva documentación</span>
+                                                <span class="time">9:30 AM</span>
+                                            </div>
+                                        </a>
+                                        <!-- More notification items -->
+                                    </div>
+                                </li>
+                                <li>
+                                    <a class="nav-link text-center m-b-5 text-primary" href="javascript:void(0);">
+                                        <strong>Ver todas las notificaciones</strong>
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <!-- User profile -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle waves-effect waves-dark" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="C:\Users\Mauri\Downloads\Adminbite\2018\light-sidebar\AyrtonSenna\DanteSparda.jpg" alt="Foto de perfil" class="rounded-circle" width="31" height="31">
+                                <span class="ms-2 d-none d-md-inline">Dante Sparda</span>   
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li>
+                                    <div class="d-flex no-block align-items-center p-3 bg-gradient text-white m-b-10" style="background: linear-gradient(90deg, var(--darker-red), var(--dark-red))">
+                                        <div class="">
+                                            <img src="C:\Users\Mauri\Downloads\Adminbite\2018\light-sidebar\AyrtonSenna\DanteSparda.jpg" alt="user" class="rounded-circle" width="60">
+                                        </div>
+                                        <div class="ms-3">
+                                            <h4 class="m-b-0">Dante Sparda</h4>
+                                            <p class=" m-b-0">admin@example.com</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li><a class="dropdown-item" href="#"><i class="ti-user m-r-5 m-l-5"></i> Mi perfil</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="ti-wallet m-r-5 m-l-5"></i> Mi cuenta</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="ti-email m-r-5 m-l-5"></i> Mensajes</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#"><i class="ti-settings m-r-5 m-l-5"></i> Configuración</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fa fa-power-off m-r-5 m-l-5"></i> Cerrar sesión</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        
+        <!-- Left Sidebar -->
+        <aside class="left-sidebar">
+            <div class="scroll-sidebar">
+                <!-- User profile -->
+                <div class="user-profile dropdown m-t-20">
+                    <div class="user-pic">
+                        <img src="C:\Users\Mauri\Downloads\Adminbite\2018\light-sidebar\AyrtonSenna\DanteSparda.jpg" alt="users" class="rounded-circle" />
+                    </div>
+                    <div class="user-content hide-menu m-t-10">
+                        <h5 class="m-b-10 user-name font-medium">Dante Sparda</h5>
+                        <a href="javascript:void(0)" class="btn btn-circle btn-sm m-r-5" id="Userdd" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fas fa-cog"></i>
+                        </a>
+                        <a href="javascript:void(0)" title="Logout" class="btn btn-circle btn-sm">
+                            <i class="fas fa-power-off"></i>
+                        </a>
+                        <div class="dropdown-menu animated flipInY" aria-labelledby="Userdd">
+                            <a class="dropdown-item" href="javascript:void(0)"><i class="ti-user m-r-5 m-l-5"></i> Mi perfil</a>
+                            <a class="dropdown-item" href="javascript:void(0)"><i class="ti-wallet m-r-5 m-l-5"></i> Mi cuenta</a>
+                            <a class="dropdown-item" href="javascript:void(0)"><i class="ti-email m-r-5 m-l-5"></i> Mensajes</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="javascript:void(0)"><i class="ti-settings m-r-5 m-l-5"></i> Configuración</a>
+                            <a class="dropdown-item" href="javascript:void(0)"><i class="fa fa-power-off m-r-5 m-l-5"></i> Cerrar sesión</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sidebar navigation -->
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="nav-small-cap">
+                            <span class="hide-menu">HTML/CSS</span>
+                        </li>
+                        
+                        <!-- Menú desplegable -->
+                        <li class="sidebar-item">
+                            <a class="sidebar-link has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false">
+                                <i class="fas fa-code"></i>
+                                <span class="hide-menu">Estructura de html y css</span>
+                            </a>
+                            <ul aria-expanded="false" class="collapse first-level">
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="Estructura.html" target="content-frame">
+                                        <i class="fas fa-file-code"></i>
+                                        <span class="hide-menu">Estructura</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="EtiquetasdeContenidoyTexto.html" target="content-frame">
+                                        <i class="fas fa-font"></i>
+                                        <span class="hide-menu">Contenido y texto</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="Listas.html" target="content-frame">
+                                        <i class="fas fa-list"></i>
+                                        <span class="hide-menu">Listas</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="EnlacesyNavegación.html" target="content-frame">
+                                        <i class="fas fa-link"></i>
+                                        <span class="hide-menu">Enlaces y Navegación</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="Imagenesymultimedia.html" target="content-frame">
+                                        <i class="fas fa-image"></i>
+                                        <span class="hide-menu">Imágenes</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="Tablas.html" target="content-frame">
+                                        <i class="fas fa-table"></i>
+                                        <span class="hide-menu">Formularios</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="ElementosSemanticosYdeSeccion.html" target="content-frame">
+                                        <i class="fas fa-cubes"></i>
+                                        <span class="hide-menu">Elementos de sección</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="ElementosInteractivosyGraficos.html" target="content-frame">
+                                        <i class="fas fa-mouse-pointer"></i>
+                                        <span class="hide-menu">Interactivos y gráficos</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="Elemntosdeinclusionyembebidos.html" target="content-frame">
+                                        <i class="fas fa-square"></i>
+                                        <span class="hide-menu">Inclusión y embebidos</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="Metainformacionyrecuros.html" target="content-frame">
+                                        <i class="fas fa-info-circle"></i>
+                                        <span class="hide-menu">Meta-información</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="EtiquetasObsoletas.html" target="content-frame">
+                                        <i class="fas fa-ban"></i>
+                                        <span class="hide-menu">Obsoletas</span>
+                                    </a>
+                                </li>
+                                <li class="sidebar-item">
+                                    <a class="sidebar-link" href="Conceptos.html" target="content-frame">
+                                        <i class="fab fa-github"></i>
+                                        <span class="hide-menu">Conceptos GitHub</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <!-- Otros elementos del menú -->
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
+                                <i class="fas fa-home"></i>
+                                <span class="hide-menu">Inicio</span>
+                            </a>
+                        </li>
+                        
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
+                                <i class="fas fa-cog"></i>
+                                <span class="hide-menu">Configuración</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <!-- Main content -->
+        <div class="page-wrapper">
+            <!-- Bread crumb -->
+            <div class="page-breadcrumb">
+                <div class="row">
+                    <div class="col-12 d-flex no-block align-items-center">
+                        <h4 class="page-title">Documentación HTML/CSS</h4>
+                        <div class="ms-auto text-end">
+                            <nav aria-label="breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                                    <li class="breadcrumb-item active" aria-current="page">Documentación</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Container fluid -->
+            <div class="container-fluid">
+                <!-- Start Page Content -->
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <iframe name="content-frame" class="content-iframe" src="Estructura.html"></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Page Content -->
+            </div>
+            
+            <!-- Footer -->
+            <footer class="footer text-center">
+                &copy; 2023 Admin Panel. Todos los derechos reservados.
+            </footer>
+        </div>
+    </div>
+    
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Custom JS -->
+    <script>
+        // Preloader
+        $(window).on('load', function() {
+            $('.preloader').fadeOut('slow');
+        });
+        
+        // Navigation
+        $(document).ready(function() {
+            // Active menu item
+            $('.sidebar-link').click(function(e) {
+                $('.sidebar-link').removeClass('active');
+                $(this).addClass('active');
+            });
+            
+            // Toggle sidebar on mobile
+            $('#mobile-toggle').click(function() {
+                $('.left-sidebar').toggleClass('mobile-show');
+            });
+            
+            // Toggle mini sidebar
+            $('#sidebar-toggle').click(function() {
+                $('body').toggleClass('sidebar-collapsed');
+            });
+            
+            // Dropdown menus
+            $('.has-arrow').click(function(e) {
+                e.preventDefault();
+                $(this).parent().toggleClass('open');
+                $(this).next('ul').slideToggle();
+            });
+            
+            // Close other menus when opening a new one
+            $('.sidebar-link').not('.has-arrow').click(function() {
+                $('.first-level').slideUp();
+                $('.sidebar-item').removeClass('open');
+            });
+            
+            // Initialize tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+        });
+    </script>
+</body>
+</html>
